@@ -91,9 +91,14 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="src\View\SmartSetup.View.Main.pas">
-            <Form>Form1</Form>
+            <Form>frmInicio</Form>
             <FormType>dfm</FormType>
         </DCCReference>
+        <DCCReference Include="src\View\SmartSetup.View.Download.pas">
+            <Form>frmDownload</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="src\Model\SmartSetup.Model.InterfaceCallback.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
