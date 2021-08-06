@@ -1,0 +1,88 @@
+unit SmartSetup.Model.InterfaceCallback;
+
+interface
+
+uses
+  Windows,
+  Messages,
+  SysUtils,
+  Variants,
+  Classes,
+  Graphics,
+  Controls,
+  Forms,
+  Dialogs,
+  UrlMon,
+  ShellApi,
+  Activex,
+  ComCtrls,
+  StdCtrls,
+  Gauges;
+
+type
+   TObjetoCallback = class(TInterfacedObject, IBindStatusCallback)
+  public
+    function OnStartBinding(dwReserved: DWORD; pib: IBinding): HResult; stdcall;
+    function GetPriority(out nPriority): HResult; stdcall;
+    function OnLowResource(reserved: DWORD): HResult; stdcall;
+    function OnProgress(ulProgress, ulProgressMax, ulStatusCode: ULONG; szStatusText: LPCWSTR): HResult; stdcall;
+    function OnStopBinding(hresult: HResult; szError: LPCWSTR): HResult; stdcall;
+    function GetBindInfo(out grfBINDF: DWORD; var bindinfo: TBindInfo): HResult; stdcall;
+    function OnDataAvailable(grfBSCF: DWORD; dwSize: DWORD; formatetc: PFormatEtc; stgmed: PStgMedium): HResult; stdcall;
+    function OnObjectAvailable(const iid: TGUID; punk: IUnknown): HResult; stdcall;
+  end;
+
+implementation
+
+uses
+  SmartSetup.View.Main, SmartSetup.View.Download;
+
+{ TObjetoCallback }
+
+function TObjetoCallback.GetBindInfo(out grfBINDF: DWORD;
+  var bindinfo: TBindInfo): HResult;
+begin
+
+end;
+
+function TObjetoCallback.GetPriority(out nPriority): HResult;
+begin
+
+end;
+
+function TObjetoCallback.OnDataAvailable(grfBSCF, dwSize: DWORD;
+  formatetc: PFormatEtc; stgmed: PStgMedium): HResult;
+begin
+
+end;
+
+function TObjetoCallback.OnLowResource(reserved: DWORD): HResult;
+begin
+
+end;
+
+function TObjetoCallback.OnObjectAvailable(const iid: TGUID;
+  punk: IInterface): HResult;
+begin
+
+end;
+
+function TObjetoCallback.OnProgress(ulProgress, ulProgressMax,
+  ulStatusCode: ULONG; szStatusText: LPCWSTR): HResult;
+begin
+
+end;
+
+function TObjetoCallback.OnStartBinding(dwReserved: DWORD;
+  pib: IBinding): HResult;
+begin
+
+end;
+
+function TObjetoCallback.OnStopBinding(hresult: HResult;
+  szError: LPCWSTR): HResult;
+begin
+
+end;
+
+end.
