@@ -1,0 +1,86 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  AlphaBlendValue = 200
+  Caption = 'Form1'
+  ClientHeight = 701
+  ClientWidth = 1087
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  OnCreate = FormCreate
+  DesignSize = (
+    1087
+    701)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object pnBackground: TPanel
+    Left = 0
+    Top = 0
+    Width = 1089
+    Height = 701
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    BevelOuter = bvNone
+    ShowCaption = False
+    TabOrder = 0
+    object SplitView1: TSplitView
+      Left = 0
+      Top = 0
+      Width = 200
+      Height = 701
+      CloseStyle = svcCompact
+      Color = clCaptionText
+      OpenedWidth = 200
+      Placement = svpLeft
+      TabOrder = 0
+    end
+    object PageControl1: TPageControl
+      Left = 206
+      Top = 8
+      Width = 867
+      Height = 681
+      ParentCustomHint = False
+      ActivePage = TabSheet1
+      BiDiMode = bdLeftToRight
+      DoubleBuffered = False
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      MultiLine = True
+      ParentBiDiMode = False
+      ParentDoubleBuffered = False
+      ParentFont = False
+      ParentShowHint = False
+      ShowHint = False
+      TabOrder = 1
+      TabStop = False
+      object TabSheet1: TTabSheet
+        Caption = 'TabSheet1'
+      end
+      object TabSheet2: TTabSheet
+        Caption = 'TabSheet2'
+        ImageIndex = 1
+        ExplicitWidth = 281
+        ExplicitHeight = 165
+      end
+      object TabSheet3: TTabSheet
+        Caption = 'TabSheet3'
+        ImageIndex = 2
+        ExplicitWidth = 281
+        ExplicitHeight = 165
+      end
+      object TabSheet4: TTabSheet
+        Caption = 'TabSheet4'
+        ImageIndex = 3
+        ExplicitWidth = 281
+        ExplicitHeight = 165
+      end
+    end
+  end
+end
