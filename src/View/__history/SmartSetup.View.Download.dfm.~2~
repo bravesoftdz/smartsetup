@@ -27,6 +27,8 @@ object frmDownload: TfrmDownload
     ParentBackground = False
     ShowCaption = False
     TabOrder = 0
+    ExplicitLeft = 40
+    ExplicitHeight = 351
     object Shape1: TShape
       Left = 13
       Top = 21
@@ -69,7 +71,7 @@ object frmDownload: TfrmDownload
     end
     object Gauge1: TGauge
       Left = 40
-      Top = 184
+      Top = 168
       Width = 545
       Height = 36
       BackColor = 5064516
@@ -82,7 +84,7 @@ object frmDownload: TfrmDownload
       Font.Style = []
       ParentFont = False
       ParentShowHint = False
-      Progress = 0
+      Progress = 80
       ShowHint = False
       ShowText = False
     end

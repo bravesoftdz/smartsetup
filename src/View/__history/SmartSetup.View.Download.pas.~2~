@@ -5,7 +5,7 @@ interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.Samples.Gauges,
-  Vcl.StdCtrls, Vcl.ComCtrls;
+  Vcl.StdCtrls;
 
 type
   TfrmDownload = class(TForm)
@@ -27,8 +27,6 @@ var
 
 implementation
 
-uses
-  SmartSetup.Model.InterfaceCallback;
 {$R *.dfm}
 
 end.

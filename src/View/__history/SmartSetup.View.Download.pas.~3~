@@ -16,6 +16,7 @@ type
     lbTitulo: TLabel;
     Gauge1: TGauge;
     lbStatus: TLabel;
+    ProgressBar1: TProgressBar;
   private
     { Private declarations }
   public
@@ -27,8 +28,6 @@ var
 
 implementation
 
-uses
-  SmartSetup.Model.InterfaceCallback;
 {$R *.dfm}
 
 end.
