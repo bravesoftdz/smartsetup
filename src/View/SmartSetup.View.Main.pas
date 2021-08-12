@@ -30,7 +30,8 @@ uses
   JclSecurity,
   UrlMon,
   ShellAPI,
-  JclSysInfo;
+  JclSysInfo,
+  System.UITypes;
 
 type
   TfrmInicio = class(TForm)
@@ -70,19 +71,16 @@ type
     Panel8: TPanel;
     Shape2: TShape;
     Shape3: TShape;
-    Shape4: TShape;
-    Label1: TLabel;
+    shpVs: TShape;
+    lbBibliotecas: TLabel;
     Shape8: TShape;
-    Image3: TImage;
-    Label3: TLabel;
-    Shape9: TShape;
-    Label4: TLabel;
-    Image4: TImage;
-    Shape10: TShape;
-    Label5: TLabel;
-    Image5: TImage;
+    imgVs: TImage;
+    lbVs: TLabel;
+    shpDx: TShape;
+    lbDx: TLabel;
+    imgDx: TImage;
     Shape11: TShape;
-    lbNetFramework: TLabel;
+    lbNet452: TLabel;
     Image6: TImage;
     Shape12: TShape;
     Image7: TImage;
@@ -138,39 +136,48 @@ type
     Panel5: TPanel;
     Image22: TImage;
     pnEssenciais: TPanel;
-    Image23: TImage;
+    imgEssenciais: TImage;
     imgFirefoxClick: TImage;
     imgOperaClick: TImage;
     imgOperaGXClick: TImage;
     imgVivaldiClick: TImage;
     Shape7: TShape;
-    Label6: TLabel;
-    Image24: TImage;
+    lbNet461: TLabel;
     Shape29: TShape;
     Label20: TLabel;
-    Image25: TImage;
     Shape30: TShape;
-    Label21: TLabel;
-    Image26: TImage;
+    lbNet471: TLabel;
     Shape31: TShape;
-    Label22: TLabel;
-    Image27: TImage;
+    lbNet472: TLabel;
     Label23: TLabel;
     Shape32: TShape;
-    Image28: TImage;
+    imgWinrar: TImage;
     Label24: TLabel;
     Label25: TLabel;
     Image29: TImage;
     Shape33: TShape;
-    Shape34: TShape;
-    Image30: TImage;
-    Label26: TLabel;
+    shp7zip: TShape;
+    img7zip: TImage;
+    lb7zip: TLabel;
     Shape35: TShape;
     Image31: TImage;
     Label27: TLabel;
     Shape36: TShape;
     Image32: TImage;
     Label28: TLabel;
+    Image3: TImage;
+    Image4: TImage;
+    Image5: TImage;
+    Image24: TImage;
+    imgVsClick: TImage;
+    imgDxClick: TImage;
+    imgNet452Click: TImage;
+    imgNet461Click: TImage;
+    imgNet462Click: TImage;
+    imgNet471: TImage;
+    imgNet472Click: TImage;
+    imgWinrarClick: TImage;
+    img7zipClick: TImage;
     procedure FormCreate(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure pnNavegadoresMouseMove(Sender: TObject; Shift: TShiftState; X,
@@ -183,16 +190,25 @@ type
     procedure imgVivaldiClickClick(Sender: TObject);
     procedure pnNavegadoresClick(Sender: TObject);
     procedure pnEssenciaisClick(Sender: TObject);
+    procedure imgVsClickClick(Sender: TObject);
+    procedure imgDxClickClick(Sender: TObject);
+    procedure imgNet452ClickClick(Sender: TObject);
+    procedure imgNet461ClickClick(Sender: TObject);
+    procedure imgNet462ClickClick(Sender: TObject);
+    procedure imgNet471Click(Sender: TObject);
+    procedure imgNet472ClickClick(Sender: TObject);
+    procedure imgWinrarClickClick(Sender: TObject);
+    procedure img7zipClickClick(Sender: TObject);
   private
     Origem : String;
     Destino : String;
     { Private declarations }
   public
     function BaixarArquivo(Origem, Destino: string): Boolean;
-    Function DownloadFile(Source, Dest: string): Boolean;
     function ShellExecuteAndWait(Operation, FileName, Parameter,
   Directory: String; Show: Word; bWait: Boolean): Longint;
     function CriarPasta(Caminho: String): boolean;
+    procedure DownloadLink(Link, Nome:String);
     { Public declarations }
   end;
 
@@ -229,9 +245,27 @@ begin
     CreateDir(Caminho);
 end;
 
-function TfrmInicio.DownloadFile(Source, Dest: string): Boolean;
+procedure TfrmInicio.DownloadLink(Link, Nome: String);
 begin
-
+  Origem := Link;
+  Destino := ExtractFilePath(Application.ExeName) + 'Downloads\' + Nome;
+  try
+    frmDownload := TfrmDownload.Create(nil);
+    frmDownload.Show;
+    if BaixarArquivo(Origem, Destino) then
+    begin
+      frmDownload.lbStatus.Caption := 'Download Concluído';
+      if MessageDlg('Download concluído, deseja instalar?', mtinformation, [mbyes, mbno],0)=mryes then
+        ShellExecuteAndWait('open', Destino, '', '', SW_SHOWNORMAL, True);
+    end
+    else
+      MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
+  except
+     on E: Exception do
+     MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
+  end;
+  frmDownload.Close;
+  frmDownload.Free;
 end;
 
 procedure TfrmInicio.FormCreate(Sender: TObject);
@@ -272,124 +306,74 @@ begin
 
 end;
 
+procedure TfrmInicio.imgDxClickClick(Sender: TObject);
+begin
+  DownloadLink('http://fmsoftware.online/downloads/visual-redist.exe', 'visual-redist.exe');
+end;
+
 procedure TfrmInicio.imgFirefoxClickClick(Sender: TObject);
 begin
-  Origem := 'http://fmsoftware.online/downloads/FirefoxSetup.exe';
-  Destino := ExtractFilePath(Application.ExeName) + 'Downloads\Firefox.exe';
-  try
-    frmDownload := TfrmDownload.Create(nil);
-    frmDownload.Show;
-    if BaixarArquivo(Origem, Destino) then
-    begin
-      frmDownload.Gauge1.Progress := frmDownload.Gauge1.MaxValue;
-      frmDownload.lbStatus.Caption := 'Download Concluído';
-      if MessageDlg('Download concluído, deseja instalar?', mtinformation, [mbyes, mbno],0)=mryes then
-        ShellExecuteAndWait('open', Destino, '', '', SW_SHOWNORMAL, True);
-    end
-    else
-      MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  except
-     on E: Exception do
-     MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  end;
-  frmDownload.Close;
-  frmDownload.Free;
+  DownloadLink('http://fmsoftware.online/downloads/FirefoxSetup.exe', 'FirefoxSetup.exe');
+end;
+
+procedure TfrmInicio.imgNet452ClickClick(Sender: TObject);
+begin
+  DownloadLink('http://fmsoftware.online/downloads/ndp452.exe', 'NetFramework4-5-2.exe');
+end;
+
+procedure TfrmInicio.imgNet461ClickClick(Sender: TObject);
+begin
+  DownloadLink('http://fmsoftware.online/downloads/NDP461.exe', 'Netframework4-6-1.exe');
+end;
+
+procedure TfrmInicio.imgNet462ClickClick(Sender: TObject);
+begin
+  DownloadLink('http://fmsoftware.online/downloads/NDP462.exe', 'Netframework4-6-2.exe');
+end;
+
+procedure TfrmInicio.imgNet471Click(Sender: TObject);
+begin
+  DownloadLink('http://fmsoftware.online/downloads/ndp471.exe', 'Netframework4-7-1.exe');
+end;
+
+procedure TfrmInicio.imgNet472ClickClick(Sender: TObject);
+begin
+  DownloadLink('http://fmsoftware.online/downloads/ndp472.exe', 'Netframework4-7-2.exe');
 end;
 
 procedure TfrmInicio.imgOperaClickClick(Sender: TObject);
 begin
-  Origem := 'http://fmsoftware.online/downloads/OperaSetup.exe';
-  Destino := ExtractFilePath(Application.ExeName) + 'Downloads\OperaSetup.exe';
-  try
-    frmDownload := TfrmDownload.Create(nil);
-    frmDownload.Show;
-    if BaixarArquivo(Origem, Destino) then
-    begin
-      frmDownload.Gauge1.Progress := frmDownload.Gauge1.MaxValue;
-      frmDownload.lbStatus.Caption := 'Download Concluído';
-      if MessageDlg('Download concluído, deseja instalar?', mtinformation, [mbyes, mbno],0)=mryes then
-        ShellExecuteAndWait('open', Destino, '', '', SW_SHOWNORMAL, True);
-    end
-    else
-      MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  except
-     on E: Exception do
-     MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  end;
-  frmDownload.Close;
-  frmDownload.Free;
+  DownloadLink('http://fmsoftware.online/downloads/OperaSetup.exe', 'OperaSetup.exe');
 end;
 
 procedure TfrmInicio.imgOperaGXClickClick(Sender: TObject);
 begin
-  Origem := 'http://fmsoftware.online/downloads/OperaGXSetup.exe';
-  Destino := ExtractFilePath(Application.ExeName) + 'Downloads\OperaGXSetup.exe';
-  try
-    frmDownload := TfrmDownload.Create(nil);
-    frmDownload.Show;
-    if BaixarArquivo(Origem, Destino) then
-    begin
-      frmDownload.Gauge1.Progress := frmDownload.Gauge1.MaxValue;
-      frmDownload.lbStatus.Caption := 'Download Concluído';
-      if MessageDlg('Download concluído, deseja instalar?', mtinformation, [mbyes, mbno],0)=mryes then
-        ShellExecuteAndWait('open', Destino, '', '', SW_SHOWNORMAL, True);
-    end
-    else
-      MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  except
-     on E: Exception do
-     MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  end;
-  frmDownload.Close;
-  frmDownload.Free;
+  DownloadLink('http://fmsoftware.online/downloads/OperaGXSetup.exe', 'OperaGXSetup.exe');
 end;
 
 procedure TfrmInicio.imgVivaldiClickClick(Sender: TObject);
 begin
-  Origem := 'https://downloads.vivaldi.com/stable/Vivaldi.4.1.2369.16.x64.exe';
-  Destino := ExtractFilePath(Application.ExeName) + 'Downloads\VivaldiSetup.exe';
-  try
-    frmDownload := TfrmDownload.Create(nil);
-    frmDownload.Show;
-    if BaixarArquivo(Origem, Destino) then
-    begin
-      frmDownload.Gauge1.Progress := frmDownload.Gauge1.MaxValue;
-      frmDownload.lbStatus.Caption := 'Download Concluído';
-      if MessageDlg('Download concluído, deseja instalar?', mtinformation, [mbyes, mbno],0)=mryes then
-        ShellExecuteAndWait('open', Destino, '', '', SW_SHOWNORMAL, True);
-    end
-    else
-      MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  except
-     on E: Exception do
-     MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  end;
-  frmDownload.Close;
-  frmDownload.Free;
+  DownloadLink('https://downloads.vivaldi.com/stable/Vivaldi.4.1.2369.16.x64.exe', 'Vivaldi.exe');
+end;
+
+procedure TfrmInicio.imgVsClickClick(Sender: TObject);
+begin
+    DownloadLink('http://fmsoftware.online/downloads/visual-redist.exe', 'VisualAIO.exe')
+end;
+
+procedure TfrmInicio.imgWinrarClickClick(Sender: TObject);
+begin
+  DownloadLink('http://fmsoftware.online/downloads/winrar-x64.exe', 'Winrar.exe')
+end;
+
+procedure TfrmInicio.img7zipClickClick(Sender: TObject);
+begin
+  DownloadLink('https://www.7-zip.org/a/7z1900-x64.exe', '7zip.exe');
 end;
 
 procedure TfrmInicio.imgChromeClickClick(Sender: TObject);
 begin
-  Origem := 'http://fmsoftware.online/downloads/Chrome.exe';
-  Destino := ExtractFilePath(Application.ExeName) + 'Downloads\ChromeSetup.exe';
-  try
-    frmDownload := TfrmDownload.Create(nil);
-    frmDownload.Show;
-    if BaixarArquivo(Origem, Destino) then
-    begin
-      frmDownload.Gauge1.Progress := frmDownload.Gauge1.MaxValue;
-      frmDownload.lbStatus.Caption := 'Download Concluído';
-      if MessageDlg('Download concluído, deseja instalar?', mtinformation, [mbyes, mbno],0)=mryes then
-        ShellExecuteAndWait('open', Destino, '', '', SW_SHOWNORMAL, True);
-    end
-    else
-      MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  except
-     on E: Exception do
-     MessageDlg('Erro ao tentar efetuar o download', mtInformation, [mbOK], 0);
-  end;
-  frmDownload.Close;
-  frmDownload.Free;
+  DownloadLink('http://fmsoftware.online/downloads/Chrome.exe', 'ChromeSetup.exe');
 end;
 
 function TFrmInicio.ShellExecuteAndWait(Operation, FileName, Parameter,

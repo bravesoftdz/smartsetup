@@ -1,6 +1,7 @@
 object frmDownload: TfrmDownload
   Left = 0
   Top = 0
+  BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'SmartSetup'
   ClientHeight = 285
@@ -88,7 +89,7 @@ object frmDownload: TfrmDownload
     end
     object lbStatus: TLabel
       Left = 40
-      Top = 141
+      Top = 157
       Width = 142
       Height = 21
       Caption = 'Efetuando Download'
