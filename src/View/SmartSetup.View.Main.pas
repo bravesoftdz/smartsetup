@@ -3,35 +3,10 @@ unit SmartSetup.View.Main;
 interface
 
 uses
-  Winapi.Windows,
-  Winapi.Messages,
-  System.SysUtils,
-  System.Variants,
-  System.Classes,
-  Vcl.Graphics,
-  Vcl.Controls,
-  Vcl.Forms,
-  Vcl.Dialogs,
-  Vcl.ExtCtrls,
-  Vcl.ComCtrls,
-  Vcl.WinXCtrls,
-  acPNG,
-  Vcl.StdCtrls,
-  Vcl.OleCtrls,
-  SHDocVw,
-  JvComputerInfoEx,
-  ShlObj,
-  ComObj,
-  FileCtrl,
-  Midaslib,
-  Registry,
-  Zip,
-  WinSock,
-  JclSecurity,
-  UrlMon,
-  ShellAPI,
-  JclSysInfo,
-  System.UITypes;
+  Winapi.Windows, Winapi.Messages,System.SysUtils,System.Variants,System.Classes,Vcl.Graphics,Vcl.Controls,
+  Vcl.Forms,Vcl.Dialogs,Vcl.ExtCtrls,Vcl.ComCtrls,Vcl.WinXCtrls,acPNG,Vcl.StdCtrls,Vcl.OleCtrls,SHDocVw,
+  JvComputerInfoEx, ShlObj,ComObj,FileCtrl,Midaslib, Registry,Zip, WinSock, JclSecurity, UrlMon, ShellAPI,
+  JclSysInfo, System.UITypes;
 
 type
   TfrmInicio = class(TForm)
@@ -254,8 +229,8 @@ begin
     frmDownload.Show;
     if BaixarArquivo(Origem, Destino) then
     begin
-      frmDownload.lbStatus.Caption := 'Download Concluído';
-      if MessageDlg('Download concluído, deseja instalar?', mtinformation, [mbyes, mbno],0)=mryes then
+      frmDownload.lbStatus.Caption := 'Download ConcluÃ­do';
+      if MessageDlg('Download concluÃ­do, deseja instalar?', mtinformation, [mbyes, mbno],0)=mryes then
         ShellExecuteAndWait('open', Destino, '', '', SW_SHOWNORMAL, True);
     end
     else
